@@ -3,10 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: null
+        };
+    }
+    
     render() {
         return (
-            <button className="square">
-                {this.props.value}
+            /* 通常のfunction, 実際はarrow functionを使う */
+            // <button className="square" onClick={function() { alert('click'); }}>
+
+            /* よくやってしまうミス, rerenderごとにalertが動いてしまう */
+            // <button className="square" onClick={alert('click')}>
+
+            /* arrow function */
+            // <button className="square" onClick={() => { alert('click'); }}>
+
+            <button
+                className="square"
+                onClick={() => { this.setState({value: 'X'}); }}
+            >
+                {this.state.value}
             </button>
         );
     }
