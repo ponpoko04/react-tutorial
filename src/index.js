@@ -74,6 +74,22 @@ class Game extends React.Component {
         const current = history[history.length - 1];
         const winner = calculateWinner(current.squares);
 
+        const moves = history.map((step, move) => {
+            const desc = move ?
+                'Go to move #' + move :
+                'Go to game start';
+            return (
+                /* 以下の例外が発生する */
+                // index.js:1452 Warning: Each child in an array or iterator should have a unique "key" prop.
+                // Check the render method of `Game`. See https://fb.me/react-warning-keys for more information.
+                // in li (at src/index.js:82)
+                // in Game (at src/index.js:113)
+                <li>
+                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                </li>
+            );
+        });
+
         let status;
         if (winner) {
             status = 'Winner: ' + winner;
@@ -91,7 +107,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{/* TODO */}</ol>
+                    <ol>{moves}</ol>
                 </div>
             </div>
         );
